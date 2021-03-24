@@ -33,18 +33,27 @@ namespace Проект
 
         private List<Data> Table = new List<Data>();
 
-        private void send_Click(object sender, RoutedEventArgs e)
+        private void Send_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < Convert.ToInt32(textbox1.Text); i++)
+            try
             {
-                Data data = new Data();
-                data.Number = i + 1;
-                Table.Add(data);
+                for (int i = 0; i < Convert.ToInt32(textbox1.Text); i++)
+                {
+                    Data data = new Data();
+                    data.Number = i + 1;
+                    Table.Add(data);
+                }
+                Tables.IsEnabled = true;
+                Tables.IsSelected = true;
+                Data.IsEnabled = false;
+                DataGrid.ItemsSource = Table;
+                Error.Visibility = Visibility.Hidden;
             }
-            Tables.IsEnabled = true;
-            Tables.IsSelected = true;
-            Data.IsEnabled = false;
-            DataGrid.ItemsSource = Table;
+            catch(Exception)
+            {
+                Error.Visibility = Visibility.Visible;
+                textbox1.Text = null;
+            }
         }
 
         public ChartValues<double> Values1 { get; set; }

@@ -18,10 +18,13 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" MinWidth="160" MinHeight="25" HorizontalAlignment="Right" Width="160" Height="26" VerticalAlignment="Bottom">Введите кол-во испытаний</Label>
-                    <TextBox x:Name="textbox1" MaxLength="3" Grid.Column="1" Grid.Row="0" MinHeight="20" Height="13" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="186" Margin="3,0,0,3"/>
-                    <Button x:Name="send" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Cursor="Hand" Click="send_Click" MinWidth="100" MinHeight="25" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">Подтвердить</Button>
+                    <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">Введите кол-во испытаний</Label>
+                    <TextBox x:Name="textbox1" MaxLength="3" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 0 0 2.5"/>
+                    <Label Grid.Row="0" Grid.Column="3" Name="Error" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Bottom">Введите число!!!</Label>
+                    <Button x:Name="Send" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Cursor="Hand" Click="Send_Click" MinWidth="100" MinHeight="25" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">Подтвердить</Button>
                 </Grid>
             </TabItem.Content>
         </TabItem>
