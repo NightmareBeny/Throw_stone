@@ -1,0 +1,86 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:Models="clr-namespace:Проект.Models" x:Class="Проект.MainWindow"
+        mc:Ignorable="d"
+        Title="Бросок камня под углом к горизонту" Height="600" Width="800" Icon="C:\Users\пк\OneDrive\Рабочий стол\3-й курс\ПП\2-ой семестр\Throw_stone\Img\faceicon.ico">
+    <TabControl x:Name="Pages">
+        <TabItem x:Name="Data" KeyDown="Data_KeyDown">
+            <TabItem.Header>Ввод кол-ва испытаний</TabItem.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Введите кол-во испытаний"/>
+                <TextBox x:Name="textbox1" MaxLength="3" Grid.Column="4" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 0 0 4"/>
+                <Label Grid.Row="0" Grid.Column="5" x:Name="Error" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Введите число!!!"/>
+                <Button x:Name="Send" Grid.Column="0" Grid.ColumnSpan="8" Grid.Row="1" Cursor="Hand" Click="Send_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Content="Подтвердить"/>
+            </Grid>
+        </TabItem>
+        <TabItem x:Name="Tables">
+            <TabItem.Header>Ввод данных в таблицу</TabItem.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center" Content="Введите ваши данные"/>
+                <DataGrid x:Name="DataGrid" Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="П/п эксперимента" Binding="{Binding Number}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Угол броска в градусах" Binding="{Binding Angle}" />
+                        <DataGridTextColumn Header="Скорость, с которой кинули камень в м\с" Binding="{Binding Speed}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="TableDataSend" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="TableDataSend_Click" Content="Подтвердить"/>
+            </Grid>
+        </TabItem>
+        <TabItem x:Name="Grafic">
+            <TabItem.Header>Графическое представление опыта</TabItem.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <lvc:CartesianChart Series="{Binding SeriesCollection}" Grid.Row="0" Grid.Column="0" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis IsMerged="False" Title="Прошедшее время(сек)" ShowLabels="True">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator StrokeThickness="1" StrokeDashArray="2" Stroke="#404F56"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis IsMerged="False" Title="Высота броска(Oy)" ShowLabels="True">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator StrokeThickness="1.5" StrokeDashArray="4" Stroke="#404F56"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <Button x:Name="Repeat" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Повторить эксперимент"/>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
