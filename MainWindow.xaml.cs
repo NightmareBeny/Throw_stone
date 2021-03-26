@@ -53,19 +53,28 @@ namespace Проект
             {
                 Error.Visibility = Visibility.Visible;
                 textbox1.Text = null;
+                textbox1.Focus();
             }
         }
 
-        public ChartValues<double> Values1 { get; set; }
-        public ChartValues<double> Values2 { get; set; }
+        public SeriesCollection SeriesCollection { get; set; } = new SeriesCollection();
 
         private void TableDataSend_Click(object sender, RoutedEventArgs e)
         {
             Tables.IsEnabled = false;
             Grafic.IsEnabled = true;
             Grafic.IsSelected = true;
-            Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
-            Values2 = new ChartValues<double> { 5, 3, 5, 7, 3, 9 };
+            foreach (var data in Table)
+            {
+                SeriesCollection.Add(new LineSeries
+                {
+                    Title = $"Опыт {data.Number}",
+                    Values = new ChartValues<double>(data.OY()),
+                    DataLabels = true,
+                    LineSmoothness = 0, //0: straight lines, 1: really smooth lines
+                    Fill = Brushes.Transparent,
+                });
+            }
             DataContext = this;
         }
 
@@ -76,7 +85,13 @@ namespace Проект
             Data.IsSelected = true;
             textbox1.Text = null;
             DataGrid.ItemsSource = null;
+            SeriesCollection.Clear();
             Table.Clear();
+        }
+
+        private void Data_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Send_Click(sender, e);
         }
     }
 }
