@@ -15,7 +15,7 @@ namespace Проект.Models
 
         public double Time()
         {
-            return 2 * Speed * Sin(2 * (Angle*PI/180)) / 9.81;
+            return 2 * Speed * Sin(Angle*PI/180) / 9.81;
         }
 
         public List<double> OY()
