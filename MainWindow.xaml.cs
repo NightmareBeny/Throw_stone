@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Проект.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Defaults;
 
 namespace Проект
 {
@@ -69,7 +70,7 @@ namespace Проект
                 SeriesCollection.Add(new LineSeries
                 {
                     Title = $"Опыт {data.Number}",
-                    Values = new ChartValues<double>(data.OY()),
+                    Values = data.Grafik(),
                     DataLabels = true,
                     LineSmoothness = 0, //0: straight lines, 1: really smooth lines
                     Fill = Brushes.Transparent,
