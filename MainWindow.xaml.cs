@@ -34,27 +34,60 @@ namespace Проект
 
         private List<Data> Table = new List<Data>();
 
+        double dt;
+
         private void Send_Click(object sender, RoutedEventArgs e)
         {
+            bool true1 = true, true2 = true;
             try
             {
-                for (int i = 0; i < Convert.ToInt32(textbox1.Text); i++)
+                Table.Clear();
+                if (Convert.ToInt32(textbox1.Text) < 0)
+                    throw new Exception();
+                else
                 {
-                    Data data = new Data();
-                    data.Number = i + 1;
-                    Table.Add(data);
+                    for (int i = 0; i < Convert.ToInt32(textbox1.Text); i++)
+                    {
+                        Data data = new Data();
+                        data.Number = i + 1;
+                        Table.Add(data);
+                    }
+                    DataGrid.ItemsSource = Table;
+                    Error.Visibility = Visibility.Hidden;
+                    true1 = true;
                 }
-                Tables.IsEnabled = true;
-                Tables.IsSelected = true;
-                Data.IsEnabled = false;
-                DataGrid.ItemsSource = Table;
-                Error.Visibility = Visibility.Hidden;
             }
             catch(Exception)
             {
                 Error.Visibility = Visibility.Visible;
                 textbox1.Text = null;
                 textbox1.Focus();
+                true1 = false;
+            }
+            /////////////
+            try
+            {
+                dt = Convert.ToDouble(textbox2.Text);
+                if (dt < 0) throw new Exception();
+                else
+                {
+                    ErrorDt.Visibility = Visibility.Hidden;
+                    true2 = true;
+                }
+            }
+            catch(Exception)
+            {
+                ErrorDt.Visibility = Visibility.Visible;
+                textbox2.Text = null;
+                textbox2.Focus();
+                true2 = false;
+            }
+            /////////////
+            if (true1&&true2)
+            {
+                Tables.IsEnabled = true;
+                Tables.IsSelected = true;
+                Data.IsEnabled = false;
             }
         }
 
@@ -67,14 +100,28 @@ namespace Проект
             Grafic.IsSelected = true;
             foreach (var data in Table)
             {
-                SeriesCollection.Add(new LineSeries
+                if (dt < 1)
                 {
-                    Title = $"Опыт {data.Number}",
-                    Values = data.Grafik(),
-                    DataLabels = true,
-                    LineSmoothness = 0, //0: straight lines, 1: really smooth lines
-                    Fill = Brushes.Transparent,
-                });
+                    SeriesCollection.Add(new LineSeries
+                    {
+                        Title = $"Опыт {data.Number}",
+                        Values = data.Grafik(dt),
+                        DataLabels = false,
+                        LineSmoothness = 0, //0: straight lines, 1: really smooth lines
+                        Fill = Brushes.Transparent,
+                    });
+                }
+                else
+                {
+                    SeriesCollection.Add(new LineSeries
+                    {
+                        Title = $"Опыт {data.Number}",
+                        Values = data.Grafik(dt),
+                        DataLabels = true,
+                        LineSmoothness = 1, //0: straight lines, 1: really smooth lines
+                        Fill = Brushes.Transparent,
+                    });
+                }
             }
             DataContext = this;
         }
@@ -85,9 +132,10 @@ namespace Проект
             Data.IsEnabled = true;
             Data.IsSelected = true;
             textbox1.Text = null;
+            textbox2.Text = null;
             DataGrid.ItemsSource = null;
             SeriesCollection.Clear();
-            Table.Clear();
+            //Table.Clear();
             GC.Collect();
         }
 

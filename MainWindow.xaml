@@ -46,8 +46,9 @@
             <TabItem.Header>Ввод кол-ва испытаний</TabItem.Header>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -61,8 +62,13 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Введите кол-во испытаний"/>
                 <TextBox x:Name="textbox1" MaxLength="3" Grid.Column="4" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 0 0 4"/>
-                <Label Grid.Row="0" Grid.Column="5" x:Name="Error" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Введите число!!!"/>
-                <Button x:Name="Send" Grid.Column="0" Grid.ColumnSpan="8" Grid.Row="1" Cursor="Hand" Click="Send_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Content="Подтвердить"/>
+                <Label Grid.Row="0" Grid.Column="5" x:Name="Error" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Введите число большее 0!!!"/>
+                <!---->
+                <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Введите точность"/>
+                <TextBox x:Name="textbox2" MaxLength="3" Grid.Column="4" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 0 0 4"/>
+                <Label Grid.Row="1" Grid.Column="5" x:Name="ErrorDt" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Введите число большее 0!!!"/>
+                <!---->
+                <Button x:Name="Send" Grid.Column="0" Grid.ColumnSpan="8" Grid.Row="2" Cursor="Hand" Click="Send_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Content="Подтвердить"/>
             </Grid>
         </TabItem>
         <TabItem x:Name="Tables">

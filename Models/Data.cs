@@ -30,12 +30,12 @@ namespace Проект.Models
             return Round(2 * Speed * Sin(Angle*PI/180) / 9.81, 2);
         }
 
-        public ChartValues<ObservablePoint> Grafik()
+        public ChartValues<ObservablePoint> Grafik(double dt)
         {
             ChartValues<ObservablePoint> list = new ChartValues<ObservablePoint>();
             double y;
             double x;
-            for (double i = 0; i <= Time(); i++)
+            for (double i = 0; i <= Time(); i=i+dt)
             {
                 y = Round(Speed * i * Sin(Angle * PI / 180) - 9.81 * Pow(i, 2) / 2, 1);
                 x = Round(Speed * i * Cos(Angle * PI / 180), 1);
