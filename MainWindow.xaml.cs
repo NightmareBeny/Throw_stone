@@ -71,7 +71,7 @@ namespace Проект
                 {
                     Title = $"Опыт {data.Number}",
                     Values = data.Grafik(),
-                    DataLabels = true,
+                    DataLabels = false,
                     LineSmoothness = 0, //0: straight lines, 1: really smooth lines
                     Fill = Brushes.Transparent,
                 });
@@ -88,6 +88,7 @@ namespace Проект
             DataGrid.ItemsSource = null;
             SeriesCollection.Clear();
             Table.Clear();
+            GC.Collect();
         }
 
         private void Data_KeyDown(object sender, KeyEventArgs e)
@@ -120,7 +121,11 @@ namespace Проект
                 GroupBox groupBox = new GroupBox();
                 groupBox.Header = $"Опыт {data.Number}";
                 groupBox.Content = panel;
-                stackPanel.Children.Add(groupBox);
+                ScrollViewer scroll = new ScrollViewer();
+                scroll.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                scroll.Content = groupBox;
+                stackPanel.Children.Add(scroll);
             }
         }
     }
