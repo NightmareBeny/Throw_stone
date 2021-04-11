@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Бросок камня под углом к горизонту" Height="600" Width="800" Icon="C:\Users\пк\OneDrive\Рабочий стол\3-й курс\ПП\2-ой семестр\Throw_stone\Img\faceicon.ico">
     <TabControl x:Name="Pages">
-        <TabItem>
+        <TabItem x:Name="Task">
             <TabItem.Header>Условия задачи</TabItem.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -87,17 +87,16 @@
                 <Button x:Name="TableDataSend" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="TableDataSend_Click" Content="Подтвердить"/>
             </Grid>
         </TabItem>
-        <TabItem x:Name="Grafic">
+        <TabItem x:Name="Grafic" GotFocus="Grafic_GotFocus">
             <TabItem.Header>Графическое представление опыта</TabItem.Header>
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.25*"/>
                 </Grid.RowDefinitions>
-                <lvc:CartesianChart Series="{Binding SeriesCollection}" Grid.Row="0" Grid.Column="0" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" x:Name="stackPanel"></StackPanel>
+                <lvc:CartesianChart Series="{Binding SeriesCollection}" Grid.Row="1" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis IsMerged="False" Title="Прошедшее время(сек)" ShowLabels="True">
                             <lvc:Axis.Separator>
@@ -113,7 +112,7 @@
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <Button x:Name="Repeat" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Повторить эксперимент"/>
+                <Button x:Name="Repeat" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Повторить эксперимент"/>
             </Grid>
         </TabItem>
     </TabControl>
