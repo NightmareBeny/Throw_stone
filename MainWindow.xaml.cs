@@ -102,14 +102,20 @@ namespace Проект
             {
                 StackPanel panel = new StackPanel();
                 TextBlock textBlock1 = new TextBlock();
-                textBlock1.Text = $"Максимальная высота: {data.hMAX()} м";
+                textBlock1.Text = $"Скорость броска: {data.Speed} м/сек";
                 panel.Children.Add(textBlock1);
                 TextBlock textBlock2 = new TextBlock();
-                textBlock2.Text = $"Максимальная дальность броска: {data.LMAX()} м";
+                textBlock2.Text = $"Угол броска: {data.Angle} градусов";
                 panel.Children.Add(textBlock2);
                 TextBlock textBlock3 = new TextBlock();
-                textBlock3.Text = $"Максимальное время полёта: {data.Time()} сек";
+                textBlock3.Text = $"Максимальная высота: {data.hMAX()} м";
                 panel.Children.Add(textBlock3);
+                TextBlock textBlock4 = new TextBlock();
+                textBlock4.Text = $"Максимальная дальность броска: {data.LMAX()} м";
+                panel.Children.Add(textBlock4);
+                TextBlock textBlock5 = new TextBlock();
+                textBlock5.Text = $"Максимальное время полёта: {data.Time()} сек";
+                panel.Children.Add(textBlock5);
                 panel.UpdateLayout();
                 GroupBox groupBox = new GroupBox();
                 groupBox.Header = $"Опыт {data.Number}";
