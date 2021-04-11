@@ -71,7 +71,7 @@ namespace Проект
                 {
                     Title = $"Опыт {data.Number}",
                     Values = data.Grafik(),
-                    DataLabels = false,
+                    DataLabels = true,
                     LineSmoothness = 0, //0: straight lines, 1: really smooth lines
                     Fill = Brushes.Transparent,
                 });
