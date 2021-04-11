@@ -95,35 +95,46 @@ namespace Проект
 
         private void TableDataSend_Click(object sender, RoutedEventArgs e)
         {
-            Tables.IsEnabled = false;
-            Grafic.IsEnabled = true;
-            Grafic.IsSelected = true;
+            bool mistake = false;
             foreach (var data in Table)
             {
-                if (dt < 1)
+                if (data.Angle < 0 || data.Speed < 0)
                 {
-                    SeriesCollection.Add(new LineSeries
-                    {
-                        Title = $"Опыт {data.Number}",
-                        Values = data.Grafik(dt),
-                        DataLabels = false,
-                        LineSmoothness = 0, //0: straight lines, 1: really smooth lines
-                        Fill = Brushes.Transparent,
-                    });
+                    MessageBox.Show($"Исправьте данные в {data.Number} строке!\nЧисла должны быть больше 0!"); mistake = true; break;
                 }
                 else
                 {
-                    SeriesCollection.Add(new LineSeries
+                    if (dt < 1)
                     {
-                        Title = $"Опыт {data.Number}",
-                        Values = data.Grafik(dt),
-                        DataLabels = true,
-                        LineSmoothness = 1, //0: straight lines, 1: really smooth lines
-                        Fill = Brushes.Transparent,
-                    });
+                        SeriesCollection.Add(new LineSeries
+                        {
+                            Title = $"Опыт {data.Number}",
+                            Values = data.Grafik(dt),
+                            DataLabels = false,
+                            LineSmoothness = 0, //0: straight lines, 1: really smooth lines
+                            Fill = Brushes.Transparent,
+                        });
+                    }
+                    else
+                    {
+                        SeriesCollection.Add(new LineSeries
+                        {
+                            Title = $"Опыт {data.Number}",
+                            Values = data.Grafik(dt),
+                            DataLabels = true,
+                            LineSmoothness = 1, //0: straight lines, 1: really smooth lines
+                            Fill = Brushes.Transparent,
+                        });
+                    }
                 }
             }
-            DataContext = this;
+            if(!mistake)
+            {
+                DataContext = this;
+                Tables.IsEnabled = false;
+                Grafic.IsEnabled = true;
+                Grafic.IsSelected = true;
+            }
         }
 
         private void Repeat_Click(object sender, RoutedEventArgs e)
