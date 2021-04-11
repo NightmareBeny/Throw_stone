@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,34 +15,38 @@ namespace Проект.Models
         public double Angle { get; set; }
         public double Speed { get; set; }
 
+        public double hMAX()
+        {
+            return Round(Pow(Speed, 2) * Pow(Sin(Angle * PI / 180), 2) / (2 * 9.81), 2);
+        }
+
+        public double LMAX()
+        {
+            return Round(Pow(Speed, 2) * Sin(2*(Angle* PI / 180)) / 9.81, 2);
+        }
+
         public double Time()
         {
-            return 2 * Speed * Sin(Angle*PI/180) / 9.81;
+            return Round(2 * Speed * Sin(Angle*PI/180) / 9.81, 2);
         }
 
-        public List<double> OY()
+        public ChartValues<ObservablePoint> Grafik()
         {
-            List<double> y = new List<double>();
+            ChartValues<ObservablePoint> list = new ChartValues<ObservablePoint>();
+            double y;
+            double x;
             for (double i = 0; i <= Time(); i++)
             {
-                double oy = Speed * i * Sin(Angle * PI / 180) - 9.81 * Pow(i, 2) / 2;
-                if (oy >= 0) y.Add(Round(oy,2));
-                else { y.Add(0); break; }
+                y = Round(Speed * i * Sin(Angle * PI / 180) - 9.81 * Pow(i, 2) / 2, 1);
+                x = Round(Speed * i * Cos(Angle * PI / 180), 1);
+                list.Add(new ObservablePoint(x, y));
             }
-            if (y.Last()!=0) y.Add(0);
-            return y;
-        }
-
-        public List<double> OX()
-        {
-            List<double> x = new List<double>();
-            for (double i = 0; i <= Time(); i++)
+            if (list.Last().Y != 0)
             {
-                x.Add(Speed * i * Cos(Angle * PI / 180));
+                x = Round(Speed * Time() * Cos(Angle * PI / 180), 1);
+                list.Add(new ObservablePoint(x, 0));
             }
-            if (x.Last() != Pow(Speed, 2) * Sin(2 * (Angle * PI / 180)) / 9.81)
-                x.Add(Round(Pow(Speed, 2) * Sin(2 * (Angle * PI / 180)) / 9.81,2));
-            return x;
+            return list;
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Проект.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Defaults;
 
 namespace Проект
 {
@@ -69,7 +70,7 @@ namespace Проект
                 SeriesCollection.Add(new LineSeries
                 {
                     Title = $"Опыт {data.Number}",
-                    Values = new ChartValues<double>(data.OY()),
+                    Values = data.Grafik(),
                     DataLabels = true,
                     LineSmoothness = 0, //0: straight lines, 1: really smooth lines
                     Fill = Brushes.Transparent,
@@ -92,6 +93,29 @@ namespace Проект
         private void Data_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) Send_Click(sender, e);
+        }
+
+        private void Grafic_GotFocus(object sender, RoutedEventArgs e)
+        {
+            stackPanel.Children.Clear();
+            foreach (var data in Table)
+            {
+                StackPanel panel = new StackPanel();
+                TextBlock textBlock1 = new TextBlock();
+                textBlock1.Text = $"Максимальная высота: {data.hMAX()} м";
+                panel.Children.Add(textBlock1);
+                TextBlock textBlock2 = new TextBlock();
+                textBlock2.Text = $"Максимальная дальность броска: {data.LMAX()} м";
+                panel.Children.Add(textBlock2);
+                TextBlock textBlock3 = new TextBlock();
+                textBlock3.Text = $"Максимальное время полёта: {data.Time()} сек";
+                panel.Children.Add(textBlock3);
+                panel.UpdateLayout();
+                GroupBox groupBox = new GroupBox();
+                groupBox.Header = $"Опыт {data.Number}";
+                groupBox.Content = panel;
+                stackPanel.Children.Add(groupBox);
+            }
         }
     }
 }

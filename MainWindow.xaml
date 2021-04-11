@@ -5,9 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:Models="clr-namespace:Проект.Models" x:Class="Проект.MainWindow"
+        xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
         Title="Бросок камня под углом к горизонту" Height="600" Width="800" Icon="C:\Users\пк\OneDrive\Рабочий стол\3-й курс\ПП\2-ой семестр\Throw_stone\Img\faceicon.ico">
     <TabControl x:Name="Pages">
+        <TabItem x:Name="Task">
+            <TabItem.Header>Условия задачи</TabItem.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0 0 0 5" BorderBrush="Gray" Grid.ColumnSpan="5" HorizontalAlignment="Stretch">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Margin="0 5 0 0">Здесь будет текст задания</TextBlock>
+                </Border>
+                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Уравнение координаты X: </TextBlock>
+                <controls:FormulaControl Formula="x=V_{0}tcosa" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Уравнение координаты Y: </TextBlock>
+                <controls:FormulaControl Formula="y=V_{0}tsina-\frac{gt^2}{2}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Максимальная высота: </TextBlock>
+                <controls:FormulaControl Formula="h_{max}=\frac{V_0^2sin^2a}{2g}" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Максимальная дальность: </TextBlock>
+                <controls:FormulaControl Formula="L_{max}=\frac{V_0^2sin2a}{g}" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Максимальное время: </TextBlock>
+                <controls:FormulaControl Formula="t_{max}=\frac{2V_0sina}{g}" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </TabItem>
         <TabItem x:Name="Data" KeyDown="Data_KeyDown">
             <TabItem.Header>Ввод кол-ва испытаний</TabItem.Header>
             <Grid>
@@ -53,17 +87,16 @@
                 <Button x:Name="TableDataSend" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="TableDataSend_Click" Content="Подтвердить"/>
             </Grid>
         </TabItem>
-        <TabItem x:Name="Grafic">
+        <TabItem x:Name="Grafic" GotFocus="Grafic_GotFocus">
             <TabItem.Header>Графическое представление опыта</TabItem.Header>
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.25*"/>
                 </Grid.RowDefinitions>
-                <lvc:CartesianChart Series="{Binding SeriesCollection}" Grid.Row="0" Grid.Column="0" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" x:Name="stackPanel"></StackPanel>
+                <lvc:CartesianChart Series="{Binding SeriesCollection}" Grid.Row="1" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis IsMerged="False" Title="Прошедшее время(сек)" ShowLabels="True">
                             <lvc:Axis.Separator>
@@ -79,7 +112,7 @@
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <Button x:Name="Repeat" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Повторить эксперимент"/>
+                <Button x:Name="Repeat" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Повторить эксперимент"/>
             </Grid>
         </TabItem>
     </TabControl>
