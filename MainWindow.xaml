@@ -104,23 +104,36 @@
                 <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Grid.Row="0" Orientation="Horizontal" x:Name="stackPanel"></StackPanel>
                 </ScrollViewer>
-                <lvc:CartesianChart Series="{Binding SeriesCollection}" Grid.Row="1" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
+                <lvc:CartesianChart Series="{Binding seriesCollection}" Grid.Row="1" LegendLocation="Right" x:Name="Chart" Zoom="Xy">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis IsMerged="False" Title="Прошедшее время(сек)" ShowLabels="True">
+                        <lvc:Axis IsMerged="False" Title="Длина броска, м(Ox)" ShowLabels="True">
                             <lvc:Axis.Separator>
                                 <lvc:Separator StrokeThickness="1" StrokeDashArray="2" Stroke="#404F56"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis IsMerged="False" Title="Высота броска(Oy)" ShowLabels="True">
+                        <lvc:Axis IsMerged="False" Title="Высота броска, м(Oy)" ShowLabels="True">
                             <lvc:Axis.Separator>
                                 <lvc:Separator StrokeThickness="1.5" StrokeDashArray="4" Stroke="#404F56"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <Button x:Name="Repeat" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Повторить эксперимент"/>
+                <Button x:Name="Farther" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Content="Перейти к анимации" Click="Farther_Click"/>
+            </Grid>
+        </TabItem>
+        <TabItem x:Name="Animation">
+            <TabItem.Header>Анимация движения камня</TabItem.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.25*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ScrollViewer x:Name="Scroll" Grid.Row="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+                    <Canvas x:Name="MyCanvas" Grid.Row="0"></Canvas>
+                </ScrollViewer>
+                <Button x:Name="Repeat" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="7" Cursor="Hand" Click="Repeat_Click" Content="Начать новый эксперимент"/>
             </Grid>
         </TabItem>
     </TabControl>

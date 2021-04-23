@@ -16,6 +16,7 @@ using Проект.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
+using System.Windows.Media.Animation;
 
 namespace Проект
 {
@@ -29,6 +30,7 @@ namespace Проект
             InitializeComponent();
             Tables.IsEnabled = false;
             Grafic.IsEnabled = false;
+            Animation.IsEnabled = false;
             textbox1.Focus();
         }
 
@@ -91,7 +93,7 @@ namespace Проект
             }
         }
 
-        public SeriesCollection SeriesCollection { get; set; } = new SeriesCollection();
+        public SeriesCollection seriesCollection { get; set; } = new SeriesCollection();
 
         private void TableDataSend_Click(object sender, RoutedEventArgs e)
         {
@@ -106,7 +108,7 @@ namespace Проект
                 {
                     if (dt < 1)
                     {
-                        SeriesCollection.Add(new LineSeries
+                        seriesCollection.Add(new LineSeries
                         {
                             Title = $"Опыт {data.Number}",
                             Values = data.Grafik(dt),
@@ -117,7 +119,7 @@ namespace Проект
                     }
                     else
                     {
-                        SeriesCollection.Add(new LineSeries
+                        seriesCollection.Add(new LineSeries
                         {
                             Title = $"Опыт {data.Number}",
                             Values = data.Grafik(dt),
@@ -140,13 +142,13 @@ namespace Проект
         private void Repeat_Click(object sender, RoutedEventArgs e)
         {
             Grafic.IsEnabled = false;
+            Animation.IsEnabled = false;
             Data.IsEnabled = true;
             Data.IsSelected = true;
             textbox1.Text = null;
             textbox2.Text = null;
             DataGrid.ItemsSource = null;
-            SeriesCollection.Clear();
-            //Table.Clear();
+            seriesCollection.Clear();
             GC.Collect();
         }
 
@@ -185,6 +187,61 @@ namespace Проект
                 scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
                 scroll.Content = groupBox;
                 stackPanel.Children.Add(scroll);
+            }
+        }
+
+        private void Farther_Click(object sender, RoutedEventArgs e)
+        {
+            Animation.IsEnabled = true;
+            Animation.IsSelected = true;
+            MyCanvas.Children.Clear();
+            //foreach(var data in Table)
+            for(int i=0;i<Table.Count;i++)
+            {
+                //Задаём Path(путь, по которому будет двигаться наш камень)
+                var path = new Path();
+                var pathGeom = new PathGeometry();
+                var pathFigure = new PathFigure();
+                var arc = new ArcSegment();
+                arc.Point = new Point(Table[i].LMAX()*3, 0);
+                arc.Size = new Size(Table[i].LMAX()*3, Table[i].hMAX()*12);
+                pathFigure.Segments.Add(arc);
+                pathGeom.Figures.Add(pathFigure);
+                path.Data = pathGeom;
+                Canvas.SetLeft(path, 0);
+                Canvas.SetBottom(path, 0);
+                //Создаём камень
+                var ellipse = new Ellipse();
+                ellipse.Width = 15;
+                ellipse.Height = 15;
+                //ellipse.Fill = seriesCollection.
+                ellipse.Stroke = Brushes.Black;
+                Canvas.SetLeft(ellipse, 0);
+                Canvas.SetBottom(ellipse, 0);
+                //Анимируем его
+                var storyBoard = new Storyboard();
+                var animationX = new DoubleAnimationUsingPath
+                {
+                    PathGeometry = pathGeom,
+                    Source = PathAnimationSource.X,
+                    Duration = TimeSpan.FromSeconds(Table[i].Time())
+                };
+                Storyboard.SetTarget(animationX, ellipse);
+                Storyboard.SetTargetProperty(animationX, new PropertyPath("(Canvas.Left)"));
+                storyBoard.Children.Add(animationX);
+                var animationY = new DoubleAnimationUsingPath
+                {
+                    PathGeometry = pathGeom,
+                    Source = PathAnimationSource.Y,
+                    Duration = TimeSpan.FromSeconds(Table[i].Time())
+                };
+                Storyboard.SetTarget(animationY, ellipse);
+                Storyboard.SetTargetProperty(animationY, new PropertyPath("(Canvas.Bottom)"));
+                storyBoard.Children.Add(animationY);
+                MyCanvas.Children.Add(path);
+                MyCanvas.Children.Add(ellipse);
+                
+                storyBoard.Begin();
             }
         }
     }
